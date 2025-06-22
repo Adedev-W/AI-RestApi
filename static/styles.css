@@ -1,0 +1,30 @@
+/* General Styles */
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; background-color: #f4f7f9; color: #333; display: flex; justify-content: center; padding: 2em 1em; }
+.container { max-width: 800px; width: 100%; background: #fff; padding: 2em; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+h1, h2 { color: #1a253c; text-align: center; }
+p { line-height: 1.6; }
+
+/* Camera */
+.camera-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 2em; }
+#video { background-color: #000; border-radius: 8px; margin-bottom: 1em; max-width: 100%; height: auto; }
+#status { padding: 0.5em 1em; border-radius: 20px; font-weight: bold; margin-bottom: 1em; }
+.status-idle { background-color: #e0e0e0; color: #555; }
+.status-active { background-color: #c8e6c9; color: #2e7d32; }
+
+/* Buttons & Inputs */
+button { background-color: #007bff; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-size: 1em; transition: background-color 0.2s; }
+button:disabled { background-color: #a0c3e6; cursor: not-allowed; }
+button:hover:not(:disabled) { background-color: #0056b3; }
+.upload-wrapper { margin: 1em 0; }
+input[type="file"] { border: 1px solid #ccc; padding: 10px; border-radius: 5px; }
+
+/* Demo Sections */
+.demo-section { border-top: 1px solid #eee; padding-top: 1.5em; margin-top: 2em; text-align: center; }
+.result-box { margin-top: 1.5em; padding: 1em; border: 1px dashed #ccc; border-radius: 5px; min-height: 50px; background-color: #fafafa; white-space: pre-wrap; word-wrap: break-word; text-align: left; }
+.result-success { color: #2e7d32; }
+.result-fail { color: #c62828; }
+
+/* Loader */
+#loader { border: 8px solid #f3f3f3; border-top: 8px solid #3498db; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; position: fixed; top: 50%; left: 50%; margin-top: -30px; margin-left: -30px; z-index: 1000; }
+.loader-hidden { display: none; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } 

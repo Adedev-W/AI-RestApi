@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face AI Demo</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Face AI Live Demo</h1>
+
+        <div class="camera-container">
+            <video id="video" width="640" height="480" autoplay playsinline></video>
+            <div id="status" class="status-idle">Camera Idle</div>
+            <button id="start-camera">Start Camera</button>
+        </div>
+
+        <div class="demo-section">
+            <h2>1. Face Spoofing Test</h2>
+            <p>Click the button below to capture a frame from the camera and test if it's a real face or a spoof.</p>
+            <button id="test-spoof" disabled>Test Spoofing</button>
+            <div class="result-box" id="spoof-result"></div>
+        </div>
+
+        <div class="demo-section">
+            <h2>2. Identity Verification</h2>
+            <p>Upload a clear picture of the original person (Main Image), then capture a live photo from the camera (Validation Image) to verify identity.</p>
+            <div class="upload-wrapper">
+                <label for="main-image-upload">Upload Main Image:</label>
+                <input type="file" id="main-image-upload" accept="image/png, image/jpeg, image/jpg">
+            </div>
+            <button id="verify-identity" disabled>Verify Identity</button>
+            <div class="result-box" id="verify-result"></div>
+        </div>
+    </div>
+    <div id="loader" class="loader-hidden"></div>
+    <script src="/static/script.js"></script>
+</body>
+</html> 
