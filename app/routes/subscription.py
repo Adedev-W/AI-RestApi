@@ -33,10 +33,8 @@ def unsubscribe(user_id: str, db: Session = Depends(get_db), current_user: User 
     return {"msg": "Unsubscribed from notifications"}
 
 @router.post("/notify")
-def notify_all(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+async def notify_all(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     subscribers = db.query(User).filter(User.is_subscribed == True).all()
     for user in subscribers:
-        # Kirim email notifikasi (asynchronous di production)
         await send_verification_email(user.email, "Notification", "This is a notification email.")
-        pass
     return {"msg": f"Notification sent to {len(subscribers)} subscribers"} 

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, UploadFile, File, Request, HTTPException, Form
-from app.ai-core.face_spoofing_d import predict as predict_spoof
-from app.ai-core.face_recognition import get_face_embedding, compare_faces
+from app.ai_core.face_spoofing_d import predict as predict_spoof
+from app.ai_core.face_recognition import get_face_embedding, compare_faces
 from app.core.limiter import limiter
 import os
 from dotenv import load_dotenv

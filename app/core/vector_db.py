@@ -1,6 +1,7 @@
 from pymilvus import connections, utility, Collection, CollectionSchema, FieldSchema, DataType
 import os
 from dotenv import load_dotenv
+import re
 
 load_dotenv()
 
@@ -36,7 +37,14 @@ class MilvusService:
             self.collection = Collection(COLLECTION_NAME)
         self.collection.load()
 
+    def sanitize_person_name(self, name: str) -> str:
+        # Hanya izinkan alphanumeric, underscore, dash, dan spasi
+        if not re.match(r'^[\w\- ]+$', name):
+            raise ValueError("Invalid person_name: only alphanumeric, underscore, dash, and space allowed.")
+        return name
+
     def insert_embedding(self, person_name: str, embedding: list):
+        person_name = self.sanitize_person_name(person_name)
         if self.collection is None:
             raise ConnectionError("Not connected to Milvus collection.")
         data = [[person_name], [embedding]]
@@ -45,11 +53,13 @@ class MilvusService:
         print(f"Inserted embedding for {person_name}")
 
     def has_embeddings(self, person_name: str) -> bool:
+        person_name = self.sanitize_person_name(person_name)
         if self.collection is None: return False
         results = self.collection.query(f'person_name == "{person_name}"', limit=1)
         return len(results) > 0
 
     def search_and_compare(self, person_name: str, query_embedding: list, top_k: int = 1):
+        person_name = self.sanitize_person_name(person_name)
         if self.collection is None: raise ConnectionError("Not connected to Milvus.")
         
         search_params = {"metric_type": "IP", "params": {"nprobe": 10}}

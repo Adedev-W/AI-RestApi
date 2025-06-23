@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, UploadFile, File, Request, HTTPException
 from pydantic import BaseModel
 from app.core.jwt_utils import get_current_user
 from app.models.user import User
-from app.ai-core.face_spoofing_d import predict as predict_spoof
-from app.ai-core.face_recognition import get_face_embedding, compare_faces
+from app.ai_core.face_spoofing_d import predict as predict_spoof
+from app.ai_core.face_recognition import get_face_embedding, compare_faces
 from app.core.vector_db import milvus_service
 from app.core.limiter import limiter
 from typing import Dict, Optional
@@ -155,4 +155,4 @@ async def verify_identity(
         "face_similarity": comparison_result.get("similarity"),
         "embedding_saved": embedding_was_saved,
         "error": comparison_result.get("error")
-    } 
+    }
