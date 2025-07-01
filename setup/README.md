@@ -1,6 +1,6 @@
 # Setup & Instalasi Otomatis FastAPI Auth
 
-## Bahasa Indonesia
+**🇮🇩 [Bahasa Indonesia](#deskripsi) | EN [English](#english-version)**
 
 Panduan ini membantu Anda men-setup project secara otomatis di **Linux (semua distro), MacOS, dan Windows (CMD/PowerShell)**.
 
