@@ -6,7 +6,7 @@
 
 ---
 
-## 🇮🇩 Bahasa Indonesia | 🇬🇧 English
+## 🇮🇩 Bahasa Indonesia | En English
 
 **[ENGLISH BELOW](#english-version)**
 
