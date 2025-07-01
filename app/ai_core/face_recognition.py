@@ -8,10 +8,13 @@ import os
 if not os.path.exists(os.path.expanduser("~/.insightface")):
     os.makedirs(os.path.expanduser("~/.insightface"))
 
-# Inisialisasi model
-# Anda bisa menggunakan 'cpu' atau 'cuda:0' jika punya GPU
-fa = insightface.app.FaceAnalysis(providers=['CPUExecutionProvider'])
-fa.prepare(ctx_id=0, det_size=(640, 640))
+# Inisialisasi model hanya sekali
+def _init_fa():
+    fa = insightface.app.FaceAnalysis(providers=['CPUExecutionProvider'])
+    fa.prepare(ctx_id=0, det_size=(640, 640))
+    return fa
+
+fa = _init_fa()
 
 def get_face_embedding(image_data):
     """Menerima data gambar (bytes) dan mengembalikan embedding wajah."""
@@ -32,9 +35,10 @@ def compare_faces(embedding1, embedding2):
     similarity = np.dot(embedding1, embedding2) / (np.linalg.norm(embedding1) * np.linalg.norm(embedding2))
     
     # Threshold untuk menentukan apakah wajah cocok (bisa disesuaikan)
-    match_threshold = 0.5 
+    match_threshold = 0.8 
     
     return {
         "match": bool(similarity > match_threshold),
-        "similarity": float(similarity)
-    } 
+        "similarity": float(similarity),
+        "error": None
+    }

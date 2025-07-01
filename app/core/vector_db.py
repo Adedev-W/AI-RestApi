@@ -3,6 +3,10 @@ import os
 from dotenv import load_dotenv
 import re
 
+# curl -sfL https://raw.githubusercontent.com/milvus-io/milvus/master/scripts/standalone_embed.sh -o standalone_embed.sh
+
+# bash standalone_embed.sh start
+
 load_dotenv()
 
 MILVUS_HOST = os.getenv("MILVUS_HOST", "localhost")

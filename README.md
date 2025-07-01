@@ -10,10 +10,14 @@
    ```bash
    pip install -r requirements.txt
    ```
-3. Jalankan server:
-   ```bash
-   uvicorn app.main:app --reload
+3. Jalankan db vector dan server:
    ```
+   bash standalone_embed.sh start
+   ```
+   ```bash
+   uvicorn app.main:app --port 80
+   ```
+   
 
 ## Fitur
 - O2Auth Security Middleware

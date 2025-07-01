@@ -1,1 +1,53 @@
 /venv
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Database & data
+*.db
+*.sqlite3
+*.pkl
+*.npy
+*.npz
+*.h5
+*.pth
+*.pt
+*.log
+
+# Jupyter
+.ipynb_checkpoints
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+
+# Docker
+volumes/
+
+# Model/AI cache
+~/.insightface/
+
+# Env & secrets
+.env
+.env.*
+
+# Test
+.coverage
+htmlcov/
+pytest_cache/
+
+# Setup
+/setup/__pycache__/

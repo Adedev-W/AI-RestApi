@@ -9,6 +9,8 @@ from app.core.limiter import limiter
 from typing import Dict, Optional
 import os
 from dotenv import load_dotenv
+from app.core.security import get_current_user_by_api_key, api_key_header
+from fastapi.security import APIKeyHeader
 
 load_dotenv()
 MAX_FILE_SIZE = int(os.getenv("MAX_FILE_SIZE_MB", 5)) * 1024 * 1024 # 5 MB
@@ -34,12 +36,15 @@ class FaceVerificationResponse(BaseModel):
     embedding_saved: bool = False
     error: str = None
 
+api_key_scheme = APIKeyHeader(name="X-API-Key", auto_error=True)
+
 @router.post("/predict_face_spoofing", response_model=PredictionResponse)
 @limiter.limit(os.getenv("RATE_LIMIT", "5/minute"))
 async def predict_face_spoofing(
     request: Request,
     file: UploadFile = File(...),
-    current_user: User = Depends(get_current_user)
+    x_api_key: str = Depends(api_key_header),
+    current_user: User = Depends(get_current_user_by_api_key)
 ):
     """
     Endpoint aman untuk prediksi Face Spoofing.
@@ -50,13 +55,14 @@ async def predict_face_spoofing(
         raise HTTPException(status_code=400, detail=f"Invalid file type. Allowed types are: {', '.join(ALLOWED_MIME_TYPES)}")
 
     # 2. Validasi Ukuran File
-    size = await file.seek(0, 2)
+    contents = await file.read()
+    size = len(contents)
     if size > MAX_FILE_SIZE:
         raise HTTPException(status_code=413, detail=f"File too large. Maximum size is {MAX_FILE_SIZE / 1024 / 1024} MB.")
+    # pointer sudah di akhir, reset jika perlu proses ulang
     await file.seek(0)
     
-    image_data = await file.read()
-    prediction_result = predict_spoof(image_data)
+    prediction_result = predict_spoof(contents)
     return prediction_result
 
 @router.post("/compare_faces", response_model=FaceComparisonResponse)
@@ -65,7 +71,8 @@ async def compare_faces_endpoint(
     request: Request,
     file1: UploadFile = File(...),
     file2: UploadFile = File(...),
-    current_user: User = Depends(get_current_user)
+    x_api_key: str = Depends(api_key_header),
+    current_user: User = Depends(get_current_user_by_api_key)
 ):
     """
     Endpoint aman untuk membandingkan dua wajah dari dua gambar.
@@ -93,7 +100,8 @@ async def verify_identity(
     request: Request,
     val_image: UploadFile = File(...),
     main_image: Optional[UploadFile] = File(None),
-    current_user: User = Depends(get_current_user),
+    x_api_key: str = Depends(api_key_header),
+    current_user: User = Depends(get_current_user_by_api_key),
     saved: bool = Form(False),
     name: Optional[str] = Form(None)
 ):

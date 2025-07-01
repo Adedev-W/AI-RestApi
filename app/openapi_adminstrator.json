@@ -1,0 +1,501 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+      "title": "Authentication & User Management API",
+      "description": "\nThis API provides endpoints for user registration, authentication, password management, \nrole-based access control (RBAC), and notification subscription. Only administrators can create new users and API keys.\nWeb Demo: http://127.0.0.1:8080/demo\n",
+      "contact": {
+        "name": "Your Team Name",
+        "url": "https://yourdomain.com/",
+        "email": "support@yourdomain.com"
+      },
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      },
+      "version": "1.0.0"
+    },
+    "paths": {
+      "/auth/register": {
+        "post": {
+          "tags": [
+            "auth"
+          ],
+          "summary": "Register",
+          "operationId": "register_auth_register_post",
+          "security": [{"ApiKeyAuth": []}],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserCreate"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserRead"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/auth/admin-reset-apikey": {
+        "post": {
+          "tags": [
+            "auth"
+          ],
+          "summary": "Admin Reset API Key",
+          "operationId": "admin_reset_apikey_auth_admin_reset_apikey_post",
+          "security": [{"ApiKeyAuth": []}],
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {}
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "ApiKeyAuth": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "X-API-Key"
+        }
+      },
+      "schemas": {
+        "Body_admin_reset_apikey_auth_admin_reset_apikey_post": {
+          "properties": {
+            "grant_type": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^password$"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Grant Type"
+            },
+            "username": {
+              "type": "string",
+              "title": "Username"
+            },
+            "password": {
+              "type": "string",
+              "format": "password",
+              "title": "Password"
+            },
+            "scope": {
+              "type": "string",
+              "title": "Scope",
+              "default": ""
+            },
+            "client_id": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Client Id"
+            },
+            "client_secret": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "format": "password",
+              "title": "Client Secret"
+            }
+          },
+          "type": "object",
+          "required": [
+            "username",
+            "password"
+          ],
+          "title": "Body_admin_reset_apikey_auth_admin_reset_apikey_post"
+        },
+        "Body_compare_faces_endpoint_ai_compare_faces_post": {
+          "properties": {
+            "file1": {
+              "type": "string",
+              "format": "binary",
+              "title": "File1"
+            },
+            "file2": {
+              "type": "string",
+              "format": "binary",
+              "title": "File2"
+            }
+          },
+          "type": "object",
+          "required": [
+            "file1",
+            "file2"
+          ],
+          "title": "Body_compare_faces_endpoint_ai_compare_faces_post"
+        },
+        "Body_demo_predict_face_spoofing_demo_predict_face_spoofing_post": {
+          "properties": {
+            "file": {
+              "type": "string",
+              "format": "binary",
+              "title": "File"
+            }
+          },
+          "type": "object",
+          "required": [
+            "file"
+          ],
+          "title": "Body_demo_predict_face_spoofing_demo_predict_face_spoofing_post"
+        },
+        "Body_demo_verify_identity_demo_verify_identity_post": {
+          "properties": {
+            "val_image": {
+              "type": "string",
+              "format": "binary",
+              "title": "Val Image"
+            },
+            "main_image": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "binary"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Main Image"
+            }
+          },
+          "type": "object",
+          "required": [
+            "val_image"
+          ],
+          "title": "Body_demo_verify_identity_demo_verify_identity_post"
+        },
+        "Body_predict_face_spoofing_ai_predict_face_spoofing_post": {
+          "properties": {
+            "file": {
+              "type": "string",
+              "format": "binary",
+              "title": "File"
+            }
+          },
+          "type": "object",
+          "required": [
+            "file"
+          ],
+          "title": "Body_predict_face_spoofing_ai_predict_face_spoofing_post"
+        },
+        "Body_verify_identity_ai_verify_identity_post": {
+          "properties": {
+            "val_image": {
+              "type": "string",
+              "format": "binary",
+              "title": "Val Image"
+            },
+            "main_image": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "binary"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Main Image"
+            },
+            "saved": {
+              "type": "boolean",
+              "title": "Saved",
+              "default": false
+            },
+            "name": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Name"
+            }
+          },
+          "type": "object",
+          "required": [
+            "val_image"
+          ],
+          "title": "Body_verify_identity_ai_verify_identity_post"
+        },
+        "FaceComparisonResponse": {
+          "properties": {
+            "match": {
+              "type": "boolean",
+              "title": "Match"
+            },
+            "similarity": {
+              "type": "number",
+              "title": "Similarity"
+            },
+            "error": {
+              "type": "string",
+              "title": "Error"
+            }
+          },
+          "type": "object",
+          "required": [
+            "match",
+            "similarity"
+          ],
+          "title": "FaceComparisonResponse"
+        },
+        "FaceVerificationResponse": {
+          "properties": {
+            "spoof_check_passed": {
+              "type": "boolean",
+              "title": "Spoof Check Passed"
+            },
+            "spoof_label": {
+              "type": "string",
+              "title": "Spoof Label"
+            },
+            "spoof_confidence": {
+              "type": "number",
+              "title": "Spoof Confidence"
+            },
+            "face_match_passed": {
+              "type": "boolean",
+              "title": "Face Match Passed"
+            },
+            "face_similarity": {
+              "type": "number",
+              "title": "Face Similarity"
+            },
+            "embedding_saved": {
+              "type": "boolean",
+              "title": "Embedding Saved",
+              "default": false
+            },
+            "error": {
+              "type": "string",
+              "title": "Error"
+            }
+          },
+          "type": "object",
+          "required": [
+            "spoof_check_passed",
+            "spoof_label",
+            "spoof_confidence"
+          ],
+          "title": "FaceVerificationResponse"
+        },
+        "ForgotPasswordRequest": {
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email",
+              "title": "Email"
+            }
+          },
+          "type": "object",
+          "required": [
+            "email"
+          ],
+          "title": "ForgotPasswordRequest"
+        },
+        "HTTPValidationError": {
+          "properties": {
+            "detail": {
+              "items": {
+                "$ref": "#/components/schemas/ValidationError"
+              },
+              "type": "array",
+              "title": "Detail"
+            }
+          },
+          "type": "object",
+          "title": "HTTPValidationError"
+        },
+        "PredictionResponse": {
+          "properties": {
+            "label": {
+              "type": "string",
+              "title": "Label"
+            },
+            "confidence": {
+              "type": "number",
+              "title": "Confidence"
+            }
+          },
+          "type": "object",
+          "required": [
+            "label",
+            "confidence"
+          ],
+          "title": "PredictionResponse"
+        },
+        "ResetPasswordRequest": {
+          "properties": {
+            "token": {
+              "type": "string",
+              "title": "Token"
+            },
+            "password": {
+              "type": "string",
+              "title": "Password"
+            }
+          },
+          "type": "object",
+          "required": [
+            "token",
+            "password"
+          ],
+          "title": "ResetPasswordRequest"
+        },
+        "UserCreate": {
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email",
+              "title": "Email"
+            },
+            "password": {
+              "type": "string",
+              "title": "Password"
+            }
+          },
+          "type": "object",
+          "required": [
+            "email",
+            "password"
+          ],
+          "title": "UserCreate"
+        },
+        "UserRead": {
+          "properties": {
+            "id": {
+              "type": "string",
+              "title": "Id"
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "title": "Email"
+            },
+            "is_active": {
+              "type": "boolean",
+              "title": "Is Active"
+            },
+            "is_verified": {
+              "type": "boolean",
+              "title": "Is Verified"
+            },
+            "is_subscribed": {
+              "type": "boolean",
+              "title": "Is Subscribed"
+            },
+            "role": {
+              "type": "string",
+              "title": "Role"
+            },
+            "api_key": {
+              "type": "string",
+              "title": "Api Key"
+            }
+          },
+          "type": "object",
+          "required": [
+            "id",
+            "email",
+            "is_active",
+            "is_verified",
+            "is_subscribed",
+            "role",
+            "api_key"
+          ],
+          "title": "UserRead"
+        },
+        "ValidationError": {
+          "properties": {
+            "loc": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ]
+              },
+              "type": "array",
+              "title": "Location"
+            },
+            "msg": {
+              "type": "string",
+              "title": "Message"
+            },
+            "type": {
+              "type": "string",
+              "title": "Error Type"
+            }
+          },
+          "type": "object",
+          "required": [
+            "loc",
+            "msg",
+            "type"
+          ],
+          "title": "ValidationError"
+        }
+      }
+    },
+    "security": [
+      {"ApiKeyAuth": []}
+    ]
+  }
