@@ -109,15 +109,15 @@ async def send_verification_email(to_email: str, subject: str, body: str):
     start_tls = SMTP_PORT in [587, 2525]
 
     try:
-    await aiosmtplib.send(
-        message,
-        hostname=SMTP_HOST,
-        port=SMTP_PORT,
-        username=SMTP_USER,
-        password=SMTP_PASS,
-            use_tls=use_tls,
-            start_tls=start_tls,
-    ) 
+        await aiosmtplib.send(
+            message,
+            hostname=SMTP_HOST,
+            port=SMTP_PORT,
+            username=SMTP_USER,
+            password=SMTP_PASS,
+                use_tls=use_tls,
+                start_tls=start_tls,
+        ) 
     except Exception as e:
         print(f"Failed to send email: {e}")
         raise 
