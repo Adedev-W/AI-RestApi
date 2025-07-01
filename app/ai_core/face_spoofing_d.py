@@ -1,4 +1,4 @@
-from model_fs import model, processor, device
+from .model_fs import model, processor, device
 import io
 from torch.nn.functional import softmax
 from PIL import Image
