@@ -3,7 +3,8 @@
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/fastapi-0.115%2B-green)](https://fastapi.tiangolo.com/)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
-
+[![HuggingFace](https://img.shields.io/badge/huggingface-transformers-yellow?logo=huggingface)](https://huggingface.co/docs/transformers/)
+[![ArcFace](https://img.shields.io/badge/ArcFace-insightface-orange)](https://github.com/deepinsight/insightface)
 ---
 
 ## 🇮🇩 Bahasa Indonesia | En English
