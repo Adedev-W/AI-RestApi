@@ -99,11 +99,6 @@ uvicorn app.main:app --port 80
 
 ---
 
-## Kontributor
-- [Nama Anda](https://github.com/USERNAME)
-- Pull request & issue sangat diterima!
-
----
 
 ## Lisensi
 MIT License
@@ -195,12 +190,6 @@ uvicorn app.main:app --port 80
 - Always use venv (dependency isolation)
 - For production: use reverse proxy (nginx), HTTPS, and harden security
 - See `.gitignore` for ignored files
-
----
-
-## Contributors
-- [Your Name](https://github.com/USERNAME)
-- Pull requests & issues are welcome!
 
 ---
 
