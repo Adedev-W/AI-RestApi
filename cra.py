@@ -7,7 +7,7 @@ from passlib.context import CryptContext
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 db = SessionLocal()
 
-admin_email = "see2316434@gmail.com"
+admin_email = "exampleadmin@gmail.com"
 admin_password = "SuperSecurePassword123!"
 
 hashed_password = pwd_context.hash(admin_password)
